@@ -1,0 +1,87 @@
+name: CI
+on: [push]
+jobs:
+
+  step-0-no-security:
+    strategy:
+      matrix:
+        java: [11]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    name: java-${{ matrix.java }} step-0-no-security
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-java-${{ hashFiles('**/mvnw') }}
+        restore-keys: |
+          ${{ runner.os }}-java-
+          ${{ runner.os }}-node-
+          ${{ runner.os }}-npm-
+          ${{ runner.os }}-
+    - uses: actions/setup-java@v1
+      with:
+        java-version: ${{ matrix.java }}
+    - run: sudo apt-get install -y curl
+    - run: sudo npm i -g wait-port
+    - run: cd $GITHUB_WORKSPACE && ./gradlew -p step-0-no-security clean build
+    - run: bash $GITHUB_WORKSPACE/step-0-no-security/build/libs/*jar &
+    - run: wait-port 8080
+    - run: curl 0:8080
+
+  step-1-basic-security:
+    strategy:
+      matrix:
+        java: [11]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    name: java-${{ matrix.java }} step-1-basic-security
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-java-${{ hashFiles('**/mvnw') }}
+        restore-keys: |
+          ${{ runner.os }}-java-
+          ${{ runner.os }}-node-
+          ${{ runner.os }}-npm-
+          ${{ runner.os }}-
+    - uses: actions/setup-java@v1
+      with:
+        java-version: ${{ matrix.java }}
+    - run: sudo apt-get install -y curl
+    - run: sudo npm i -g wait-port
+    - run: cd $GITHUB_WORKSPACE && ./gradlew -p step-1-basic-security clean build
+    - run: bash $GITHUB_WORKSPACE/step-1-basic-security/build/libs/*jar &
+    - run: wait-port 8080
+    - run: curl -iu ololo:trololo 0:8080
+
+  step-2-oauth2-sso-security:
+    strategy:
+      matrix:
+        java: [11]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    name: java-${{ matrix.java }} step-2-oauth2-sso-security
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-java-${{ hashFiles('**/mvnw') }}
+        restore-keys: |
+          ${{ runner.os }}-java-
+          ${{ runner.os }}-node-
+          ${{ runner.os }}-npm-
+          ${{ runner.os }}-
+    - uses: actions/setup-java@v1
+      with:
+        java-version: ${{ matrix.java }}
+    - run: sudo apt-get install -y curl
+    - run: sudo npm i -g wait-port
+    - run: cd $GITHUB_WORKSPACE && ./gradlew -p step-2-oauth2-sso-security clean build
+    - run: bash $GITHUB_WORKSPACE/step-2-oauth2-sso-security/build/libs/*jar &
+    - run: wait-port 8080
+    - run: curl -v 0:8080

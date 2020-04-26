@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="step-1-app" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="movie-catalog-system.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.daggerok.moviecatalogsystem.MovieCatalogSystemApplication" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="step-1-test" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" path="$PROJECT_DIR$/step-1-basic-security/api.http" runType="Run single request">
+    <method v="2" />
+  </configuration>
+</component>
